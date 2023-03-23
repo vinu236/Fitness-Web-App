@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&family=Raleway:wght@300&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{
+
+ font-family: raleway,poppins;
+}
+
+profile_img{
+    @apply border-4 w-[7%] 
+}
+
+@keyframes slide-in-left {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-left {
+    animation: slide-in-left 0.9s ease-out;
+  }
+  @keyframes slide-in-right {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-right {
+    animation: slide-in-right 0.9s ease-out;
+  }
+  
+
+  @keyframes custom-animation {
+    0% {
+      transform: translateY(250px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  #custom-animation .tab-body-content {
+    animation-name: custom-animation;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+  }
+    
