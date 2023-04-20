@@ -9,6 +9,7 @@ import Search from "../../components/Search";
 import Heading from "../../components/Heading";
 import { URL } from "../../../config";
 import { Link } from "react-router-dom";
+import instance from "../../api/axios";
 const User = () => {
   const [trainees, setTrainees] = useState([]);
   const [text, setText] = useState("gggg");
@@ -44,7 +45,7 @@ const User = () => {
 
   const updateStatus = async (user) => {
     try {
-      const { data } = await axios.patch(`${URL}/dashboard/users/${user._id}`, {
+      const { data } = await instance.patch(`/dashboard/users/${user._id}`, {
         isActive: !user.isActive,
       });
 
@@ -115,7 +116,7 @@ const User = () => {
 
   const getUserData = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/dashboard/users");
+      const { data } = await instance.get("/dashboard/users");
       console.log(data);
       setTrainees(data);
     } catch (error) {

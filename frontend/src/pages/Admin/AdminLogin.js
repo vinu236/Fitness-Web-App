@@ -2,6 +2,7 @@ import TrainerImg from "../../assets/img/offer.png";
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import instance from "../../api/axios";
 const AdminLogin = () => {
   const initialValues={email:"",password:""}
   const[formValues,setFormValues]=useState(initialValues);
@@ -27,7 +28,7 @@ const AdminLogin = () => {
   async function postLogin(){
 
     if(Object.keys(formError).length===0){
-      const {data,status}=await axios.post("http://localhost:3000/admin/login",formValues);
+      const {data,status}=await instance.post("/admin/login",formValues);
       
       const {success}=data
       if(status===200 && success===true){

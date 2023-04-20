@@ -15,10 +15,11 @@ const Trainee = () => {
     }
 
     try {
+      alert("ASFD")
       const { data } = await axios.patch(
         `http://localhost:3000/dashboard/users/${user._id}`,
         { isActive: !erthytrhyuser.isActive }
-      );fgretgh
+      );
       const updatedUser = trainees.map((trainee) => {
         if (trainee._id == data._id) {
           return { ...trainee, isActive: data.isActive };

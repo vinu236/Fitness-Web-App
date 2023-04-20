@@ -1,7 +1,5 @@
 import Tab from "../../components/Tab";
 import avatar from "../../assets/img/avatar.jpg";
-import Button from "../../components/Button";
-import { useNavigate } from "react-router-dom";
 import useLogout from "../../Hooks/useLogout";
 import Bmi from "../../components/Bmi";
 import BookingHistory from "../../components/BookingHistory";

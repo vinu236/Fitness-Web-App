@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import instance from "../api/axios";
 import { useDispatch } from "react-redux";
-import { setUserId, setToken } from "../Redux/userSlice";
+import { setUserId, setToken,setIsBlocked } from "../Redux/userSlice";
 import { setTrainerToken,setTrainerId } from "../Redux/trainerSlice";
 const useLogin = (url) => {
   console.log(url);
@@ -74,6 +74,7 @@ const useLogin = (url) => {
           localStorage.setItem("uid", data.uid);
           dispatch(setToken(data.traineeToken));
           dispatch(setUserId(data.uid));
+          dispatch(setIsBlocked(data.isBlocked))
           toast.success("Logged in Successfully");
           navigate("/");
         }

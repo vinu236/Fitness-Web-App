@@ -12,7 +12,7 @@ import axios from "axios";
 import instance from "../../api/axios"
 import { Link } from "react-router-dom";
 import {BsArrowRightCircleFill} from "react-icons/bs"
-import PlanDetails from "../../components/PlanDetails";
+import instance from "../../api/axios";
 const Trainer=()=>{
   const[trainers,setTrainer]=useState([]);
 
@@ -24,7 +24,6 @@ const Trainer=()=>{
 
 
   const handleLock = (row) => {
-    alert("asfdaf")
     const user = row?.values;
     console.log(user);
     if (!user) {
@@ -59,7 +58,7 @@ const Trainer=()=>{
   
   const updateStatus = async (user) => {
     try {
-      const { data } = await axios.patch(`${URL}/dashboard/blockTrainer/${user._id}`, {
+      const { data } = await instance.patch(`/dashboard/blockTrainer/${user._id}`, {
         isActive: !user.isActive,
       });
 

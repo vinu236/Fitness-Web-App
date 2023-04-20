@@ -22,7 +22,7 @@ const Login = () => {
               Email
             </label>   
                 {formErrors.email  && (
-                  <p className="text-red-500">{formErrors.password}</p>
+                  <p className="text-red-500">{formErrors.email}</p>
                 )}
             <input
               type="email"

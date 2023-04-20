@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import Modal from "../../components/User/Modal";
 import Button from "../../components/User/Button";
 import axios from "axios";
+import instance from "../../api/axios";
 
 const ModalSignUp = () => {
  
@@ -90,8 +91,8 @@ const ModalSignUp = () => {
     try {
       if (Object.keys(formErrors).length === 0 && isSubmit) {
         console.log("hey")
-        const data = await axios.post(
-          "http://localhost:3000/signup",
+        const data = await instance.post(
+          "/signup",
           formValues
         );
         console.log("data");

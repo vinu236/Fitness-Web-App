@@ -6,7 +6,7 @@ const UserVerification=({children})=>{
     useEffect(()=>{
         
         if(!localStorage.getItem("traineeToken")){
-            navigate("/",{replace:true})
+            navigate("/login",{replace:true})
             
         }
         

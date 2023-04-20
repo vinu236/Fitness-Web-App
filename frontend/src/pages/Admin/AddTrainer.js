@@ -1,9 +1,8 @@
 import InputField from "../../components/Input";
 import { useEffect, useState } from "react";
-import { URL } from "../../../config";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import instance from "../../api/axios";
 const AddTrainer = () => {
   const initialValues = { userName: "", email: "" };
   const [formValues, setFormValues] = useState(initialValues);
@@ -29,8 +28,8 @@ const AddTrainer = () => {
    
     try {
       if (Object.keys(formError).length === 0 && isSubmit) {
-        const { data, status } = await axios.post(
-          `${URL}/dashboard/addTrainer`,
+        const { data, status } = await instance.post(
+          `/dashboard/addTrainer`,
           formValues
         );
         console.log(data);

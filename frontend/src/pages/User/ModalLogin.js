@@ -8,6 +8,7 @@ import axios from "axios";
 import Alert from "../../components/Alert"
 import { useDispatch } from "react-redux";
 import { setUserId,setToken } from "../../Redux/userSlice";
+import instance from "../../api/axios";
 
 const ModalLogin = () => {
   const [showLogin, setLogin] = useState(false);
@@ -76,8 +77,8 @@ const ModalLogin = () => {
       if (Object.keys(formErrors).length === 0 && submit) {
        
         // destructuring the data from response object
-        const { data, status } = await axios.post(
-          "http://localhost:3000/login",
+        const { data, status } = await instance.post(
+          "/login",
           formValues
         );
           console.log(data)

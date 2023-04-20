@@ -121,6 +121,7 @@ exports.postLogin = async (req, res, next) => {
       email: userCheck.email,
       isAdmin: userCheck.isAdmin,
       traineeToken: accessToken,
+      isBlocked:userCheck.isActive
     });
   } catch (error) {
     //  next(error);
@@ -139,7 +140,7 @@ exports.getUser = async (req, res) => {
     //! find the  user id from the User collection and project the data that i want (second argument)
     const getUser = await User.findById(
       id,
-      { userName: 1, email: 1, plan: 1, planName: 1, userName: 1, Bmi: 1 },
+      { userName: 1, email: 1, plan: 1, planName: 1, userName: 1, Bmi: 1 ,isActive:1},
       { new: true }
     );
 

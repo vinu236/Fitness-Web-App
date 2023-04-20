@@ -5,4 +5,12 @@ const fetchData = async (id) => {
   return data;
 };
 
+export const filterData=(searchText,allUser)=>{
+
+  const filterData=allUser.filter((user)=>{
+    
+  })
+}
+
+
 export default fetchData;

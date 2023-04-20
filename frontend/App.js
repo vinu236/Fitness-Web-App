@@ -25,6 +25,7 @@ import { setTrainerId,setTrainerToken } from "./src/Redux/trainerSlice";
 import Otp from './src/components/Otp';
 import PageLoader from "./src/components/PageLoader";
 import EditPlan from "./src/components/EditPlan";
+import Active from "./src/components/Active";
 
 const AdminLayout = () => {
   return (
@@ -45,9 +46,9 @@ const tid=localStorage.getItem("tid");
 const dispatch=useDispatch();
 
   if(userToken && userId){
-    console.log("Hello")
     dispatch(setToken(userToken));
     dispatch(setUserId(userId));
+
   }
   if(trainerToken && tid){
     dispatch(setTrainerId(tid))
@@ -59,6 +60,7 @@ const dispatch=useDispatch();
     <div className="h-screen bg-black">
 
       <Navbar />
+      
       <Outlet />
     </div>
     </>
@@ -126,7 +128,7 @@ export const AppRouter = createBrowserRouter([
         path: "/",
         element:  <Home />,
       },
-      { path: "/user/profile", element:  <UserVerification> <UserProfile /> </UserVerification> },
+      { path: "/user/profile", element: <Active> <UserVerification> <UserProfile /> </UserVerification> </Active>},
       {
         path:"/trainer/profile",
         element:<TrainerProfile/>

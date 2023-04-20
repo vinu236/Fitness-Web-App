@@ -5,11 +5,15 @@ const userSlice = createSlice({
   initialState: {
     uid: null,
     tToken: null,
+    isBlocked:true
   },
   //when are these reducers called? on the dispatch of an actions
   reducers: {
     setUserId: (state, action) => {
       state.uid = action.payload;
+    },
+    setIsBlocked:(state,action)=>{
+      state.isBlocked=action.payload
     },
     setToken: (state, action) => {
       state.tToken = action.payload;
@@ -18,7 +22,7 @@ const userSlice = createSlice({
 });
 
 //exporting actions
-export const { setUserId, setToken } = userSlice.actions;
+export const { setUserId, setToken,setIsBlocked } = userSlice.actions;
 //exporting reducers
 export default userSlice.reducer;
 
