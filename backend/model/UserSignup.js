@@ -48,6 +48,22 @@ const userSignUpSchema=new Schema({
         type:Number
     },
     Bmi:[bmiSchema],
+    
+    plan:{
+        type:Boolean,
+        default:false
+    },
+    planName:{
+        type:String,
+    },
+    otp:{
+        type:Number
+    },
+    verified:{
+        type:Boolean,
+        default:false
+    }
+
 
     // timestamps: true
     

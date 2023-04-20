@@ -1,5 +1,27 @@
 import BmiType from "./BmiType";
-const BmiScoreBox=({bmi,bmiName})=>{
+import { FaSave } from "react-icons/fa";
+import instance from "../api/axios"
+import axios from "axios";
+const BmiScoreBox=({bmi,bmiName,save})=>{
+
+    const handleSave=async()=>{
+      alert("adsd")
+        const id=localStorage.getItem("uid");
+        const bmiData={
+            bmiValue:bmi,
+            bmiType:bmiName
+        }
+        console.log(bmiData)
+
+        try {
+           const {data}=await axios.patch(`http://localhost:3000/add/bmi/${id}`,bmiData);
+           console.log(data);
+           
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return(
         
@@ -9,6 +31,7 @@ const BmiScoreBox=({bmi,bmiName})=>{
                     <h1 className="text-[4rem] tracking-widest font-semibold text-white ">{bmi}</h1>
                 </div>
                <BmiType  bmiName={bmiName}/>
+              {save &&  <FaSave className="inline-block mr-2  cursor-pointer text-white" size={20} onClick={handleSave} />}
             </div>
           )
     

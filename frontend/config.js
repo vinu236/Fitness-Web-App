@@ -1,5 +1,6 @@
 import { FaServer, FaUsers, FaUserSecret, FaBook } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import {GiBookmarklet} from "react-icons/gi";
 
 
 
@@ -9,6 +10,7 @@ const Menu = [
   { title: "Members", icons: <FaUsers />, route: "/users" },
   { title: "Trainers", icons: <FaUserSecret />, route: "/trainer" },
   { title: "Plans", icons: <FaBook />, route: "/plans" },
+  {title:"Bookings",icons:<GiBookmarklet/>,route:"/bookings"},
   { title: "Logout", icons: <RiLogoutCircleRLine />, route: "/logout" },
 ];
 

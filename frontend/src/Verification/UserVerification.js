@@ -4,6 +4,7 @@ const UserVerification=({children})=>{
    
     const navigate=useNavigate()
     useEffect(()=>{
+        
         if(!localStorage.getItem("traineeToken")){
             navigate("/",{replace:true})
             

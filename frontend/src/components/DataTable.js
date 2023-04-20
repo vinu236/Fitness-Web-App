@@ -10,7 +10,7 @@ const DataTable = ({ column, Data }) => {
   },useSortBy);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
-  return (
+  return    (
 
 
     <div>

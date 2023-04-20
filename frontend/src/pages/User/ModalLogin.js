@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../../components/Input";
 import axios from "axios";
 import Alert from "../../components/Alert"
+import { useDispatch } from "react-redux";
+import { setUserId,setToken } from "../../Redux/userSlice";
 
 const ModalLogin = () => {
   const [showLogin, setLogin] = useState(false);
@@ -15,6 +17,7 @@ const ModalLogin = () => {
   const[submit,setSubmit]=useState(false)
   const[showAlert,setShowAlert]=useState("")
   const navigate = useNavigate();
+  const dispatch=useDispatch()
   useEffect(()=>{
    
     postLogin();
@@ -78,16 +81,20 @@ const ModalLogin = () => {
           formValues
         );
           console.log(data)
+          console.log(status)
         if(data?.isBlocked===false){
           console.log("blocked")
           setShowAlert("Your Are Blocked By The Admin--Contact Admin");
         }
 
-        if (status === 200 && data.token && data.uid) {
+        if (status === 200 && data.traineeToken && data.uid) {
           //set token and uuid in the localStorage from {data}  using localStorage Api
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("uuid", data.uid);
+          localStorage.setItem("traineeToken", data.traineeToken);
+          localStorage.setItem("uid", data.uid);
+          dispatch(setToken(data.traineeToken));
+          dispatch(setUserId(data.uid));
           setLogin(false);
+          navigate("/");
         }
       }
     } catch (error) {

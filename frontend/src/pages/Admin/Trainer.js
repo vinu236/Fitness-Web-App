@@ -9,9 +9,13 @@ import Search from "../../components/Search";
 import Button from "../../components/Button"
 import {Link} from "react-router-dom"
 import axios from "axios";
-
+import instance from "../../api/axios"
+import { Link } from "react-router-dom";
+import {BsArrowRightCircleFill} from "react-icons/bs"
+import PlanDetails from "../../components/PlanDetails";
 const Trainer=()=>{
   const[trainers,setTrainer]=useState([]);
+
 
  
   useEffect(()=>{
@@ -78,7 +82,7 @@ const Trainer=()=>{
 
   const getTrainerInfo= async()=>{
     try {
-      const {data}=await axios.get("http://localhost:3000/dashboard/getTrainer");
+      const {data}=await instance.get("dashboard/getTrainer");
       console.log("asdasdasd")
       console.log(data)
       setTrainer(data)
@@ -121,10 +125,23 @@ const Trainer=()=>{
             );
           },
         },
+        {
+          Header: "More Details",
+          accessor: "",
+          Cell:({row})=>{
+            return(
+              <Link to={"/dashboard/trainer/"+row.values._id}>
+              <BsArrowRightCircleFill className="inline-block cursor-pointer" />
+              </Link>
+            )
+    
+          }
+        },
       ];
    
     return(
-      <div className="relative w-full">
+      <>     
+      <div className="relative w-full  bg-gray-200">
       <div className=" absolute top-20  w-full">
       <div className="flex justify-between mb-2 items-center">
           <Heading text="Trainer Details"/>
@@ -138,6 +155,8 @@ const Trainer=()=>{
       <DataTable column={COLUMNS} Data={trainers}/>
       </div>
     </div>
+    </>
+
        
     );
 }

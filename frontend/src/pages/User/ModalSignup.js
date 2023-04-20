@@ -164,12 +164,12 @@ const ModalSignUp = () => {
             />
           </div>
           <div className="mt-9">{<Button name={"Signup"} />}</div>
-          <div className="mt-7">
+          {/* <div className="mt-7">
             <p className="text-center">
               Already have account ?{" "}
               <Link className="text-custom-gym  hover:text-white">Login</Link>{" "}
             </p>
-          </div>
+          </div> */}
         </form>
       </div>
     </Modal>

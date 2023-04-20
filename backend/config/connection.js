@@ -20,9 +20,10 @@ const CONNECT=async()=>{
         console.log("DB CONNECTING....⌛");
         console.log("DB CONNECTED........⌛⏳");
        
-    } catch (error) {
+    } catch(error)  {
         console.log(error);
     }
+   
 }
 
 module.exports=CONNECT;

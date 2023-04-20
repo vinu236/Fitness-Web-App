@@ -14,6 +14,7 @@ const Bmi = () => {
   const [bmiType, setBmiType] = useState("Not Calculated");
   const [bmiRange, setBmiRange] = useState(bmiRanges);
   const [changeWeight, setChangeWeight] = useState({ weight: "", type: "" });
+  const[save,setSave]=useState(false)
 
   const onFormSub = (w, h) => {
     let b = calBmi(w, h);
@@ -34,6 +35,7 @@ const Bmi = () => {
 
     setBmiRange(range)
     setChangeWeight(weightChange(b, w, range));
+    setSave(true)
 
   };
 
@@ -89,7 +91,7 @@ const Bmi = () => {
   return (
     <div className="h-[510px] flex justify-around items-center">
       <BmiForm getData={onFormSub} />
-      <BmiScoreBox bmi={bmi} bmiName={bmiType} />
+      <BmiScoreBox bmi={bmi} bmiName={bmiType} save={save}/>
     </div>
   );
 };

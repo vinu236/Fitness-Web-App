@@ -12,7 +12,7 @@ const SideBar=()=>{
         <div className="flex">
             <div className={ `${open ? "w-72" : "w-20"} p-8 pt-10 duration-300 h-screen bg-black relative`} >
                 <img src={img} className={`absolute cursor-pointer rounded=full -right-3 top-9 w-7  border-dark-purple ${!open && "rotate-180"} text-custom-gym`} 
-                alt="hi"
+                alt="arrowKey"
                 onClick={()=>{
                     setOpen(!open)
                 }} />

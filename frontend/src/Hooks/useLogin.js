@@ -1,24 +1,27 @@
-import axios from "axios";
-import {useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import Alert from "../../components/Alert"
-const useLogin=()=>{
-    const initialValues = { email: "", password: "" };
+import { toast } from "react-toastify";
+import instance from "../api/axios";
+import { useDispatch } from "react-redux";
+import { setUserId, setToken } from "../Redux/userSlice";
+import { setTrainerToken,setTrainerId } from "../Redux/trainerSlice";
+const useLogin = (url) => {
+  console.log(url);
+  const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const[submit,setSubmit]=useState(false)
-  const[showAlert,setShowAlert]=useState("")
-  const navigate=useNavigate()
+  const [submit, setSubmit] = useState(false);
+  const [showAlert, setShowAlert] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  useEffect(()=>{
-   
+  useEffect(() => {
     postLogin();
-  },[formErrors])
-
+  }, [formErrors]);
 
   //!handlingChange when user typing on input field making it (Two Data Binding)
   const handleChange = (e) => {
-    console.log(e.target)
+    console.log(e.target);
     //using object destructing getting name and value attributes from synthetic event e
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -26,11 +29,10 @@ const useLogin=()=>{
 
   //! event handler(e)
   const handleSubmit = (e) => {
-    //! preventing from submitting (preventing default behaviour)
+    //! preventing from submitting (preventing default behavior)
     e.preventDefault();
     setFormErrors(validate(formValues));
-    setSubmit(true)
-   
+    setSubmit(true);
   };
 
   //!client side validation -formValues(user credentials)
@@ -46,7 +48,7 @@ const useLogin=()=>{
       error.password = "password field cannot be blank";
     } else if (values.password.length < 3) {
       error.password = "password should be more than 3 characters";
-    } else if (values.password.length > 10) {
+    } else if (values.password.length > 15) {
       error.password = "password cannot be more than 10 characters";
     }
     return error;
@@ -55,52 +57,54 @@ const useLogin=()=>{
   //!after checking formError  -making Api call using axios js library
   const postLogin = async () => {
     try {
-      
       if (Object.keys(formErrors).length === 0 && submit) {
-       
         // destructuring the data from response object
-        const { data, status } = await axios.post(
-          "http://localhost:3000/login",
-          formValues
-        );
-          console.log(data)
-        if(data?.isBlocked===false){
-          console.log("blocked")
+        const { data, status } = await instance.post(url, formValues);
+        console.log(data);
+        if (data?.isBlocked === false) {
+          console.log("blocked");
           setShowAlert("Your Are Blocked By The Admin--Contact Admin");
-          setSubmit(false)
+          setSubmit(false);
         }
-            console.log(status)
-            
-            console.log(data.traineeToken)
-        if (status === 200 && data.traineeToken && data.uid) {
-           alert("login")
-          //set token and uuid in the localStorage from {data}  using localStorage Api
+        console.log(status);
+
+        // code to execute if the condition is true
+        if (status == 200 && data.traineeToken && data.uid) {
           localStorage.setItem("traineeToken", data.traineeToken);
-          localStorage.setItem("uuid", data.uid);
-          
-            navigate("/")
-        
+          localStorage.setItem("uid", data.uid);
+          dispatch(setToken(data.traineeToken));
+          dispatch(setUserId(data.uid));
+          toast.success("Logged in Successfully");
+          navigate("/");
+        }
+
+        //TODO: TRAINER SECTION PENDING
+        if (status == 200 && data.trainerToken && data.tid) {
+          localStorage.setItem("trainerToken", data.trainerToken);
+          localStorage.setItem("tid", data.tid);
+          dispatch(setTrainerId(data.tid));
+          dispatch(setTrainerToken(data.trainerToken))
+          toast.success("Logged in Successfully");
+          navigate("/");
         }
       }
     } catch (error) {
+      setSubmit(false);
+      setShowAlert("")
       console.log(error);
-      setSubmit(false)  
-      if(error.response){
-        if(error.response.status==401){
-          const message=error.response.data
-          setShowAlert(message)
-          setSubmit(false)   
-        }else if(error.response.status===500){
+      if (error.response) {
+        if (error.response.status == 404) {
+          const message = error.response.data;
+          setShowAlert(message);
+          setSubmit(false);
+        } else if (error.response.status === 500) {
           console.log("internal server error");
-          setSubmit(false)  
+          setSubmit(false);
         }
       }
-    
-     
     }
   };
 
-
-  return  { formValues, formErrors, handleChange, handleSubmit,showAlert }
-}
-export default useLogin; 
+  return { formValues, formErrors, handleChange, handleSubmit, showAlert };
+};
+export default useLogin;

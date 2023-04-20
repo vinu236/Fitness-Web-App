@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import useLogin from "../../Hooks/useLogin";
 import Alert from "../../components/Alert"
 const Login = () => {
-  const { formValues, formErrors, handleChange, handleSubmit,showAlert } = useLogin();
+  const traineeUrl="/login"
+  //!custom hooks for Login and using destructuring  to get values returning from useLogin hook
+  const { formValues, formErrors, handleChange, handleSubmit,showAlert } = useLogin(traineeUrl);
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-black">

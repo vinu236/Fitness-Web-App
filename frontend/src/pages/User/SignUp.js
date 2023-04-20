@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import useSignUp from "../../Hooks/useSignUp";
 import  Alert  from "../../components/Alert";
+import ButtonLoader from "../../components/ButtonLoader";
+
 
 const SignUp = () => {
-    const{formErrors,formValues,handleChange,handleSubmit,showAlert,setT}=useSignUp()
+  //! here im using custom hook for signup and  using destructuring  to get values returning from useSignup hook
+    const{formErrors,formValues,handleChange,handleSubmit,showAlert,isLoading}=useSignUp()
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-black">
   
@@ -80,9 +83,11 @@ const SignUp = () => {
           </div>
 
           <div className="mt-6">
-            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-custom-gym rounded-md hover:bg-orange-500 focus:outline-none focus:bg-orange-600">
+            {isLoading ? (<ButtonLoader className={"w-full flex items-center justify-center px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-custom-gym rounded-md hover:bg-orange-500 focus:outline-none focus:bg-orange-600"} text={"Signing Up"} size={20}/>) :
+            (<button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-custom-gym rounded-md hover:bg-orange-500 focus:outline-none focus:bg-orange-600">
               SignUp
-            </button>
+            </button>)
+            }
           </div>
         </form>
 

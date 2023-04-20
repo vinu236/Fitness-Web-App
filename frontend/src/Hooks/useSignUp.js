@@ -1,15 +1,20 @@
 import { useEffect,useState } from "react"
 import axios from "axios";
 import {useNavigate} from "react-router-dom" ;
+import instance from "../api/axios";
+import { toast } from "react-toastify";
+
 
 const useSignUp=()=>{
     const initialValues = { username: "", email: "", password: "" ,confirmpassword:""};
+    //creating local variable for that useState is used
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const[isSubmit,setSubmit]=useState(false)
-    const[showAlert,setShowAlert]=useState("")
+    const[showAlert,setShowAlert]=useState("");
+    const[isLoading,setLoading]=useState(false);
     
-    const navigate=useNavigate()
+    const navigate=useNavigate();
      
   
     //! Two way data binding
@@ -23,10 +28,8 @@ const useSignUp=()=>{
       e.preventDefault();
       setFormErrors(validate(formValues));   
       setSubmit(true) 
-      
-      
-      
     };
+    //making post  signup request and second argument as dependency fromError  array 
     useEffect(()=>{
       postSignup();
     },[formErrors])
@@ -80,15 +83,17 @@ const useSignUp=()=>{
       console.log(formErrors)
       try {
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-          console.log("hey")
-          const {data,status} = await axios.post(
-            "http://localhost:3000/signup",
+          setLoading(true);
+          const {data,status} = await  instance.post(
+            "/signup",
             formValues
           );
           
           if(status===201){
-           
-            navigate("/login")
+           setLoading(false);
+           const email=formValues.email
+           toast.success(`Otp has sent to ${email}`);
+            navigate("/otp",{state:email})
           }
           
         }
@@ -106,8 +111,8 @@ const useSignUp=()=>{
         }
       }
     };
-    // "mongoose": "^6.10.3",
-  return {formErrors,formValues,handleChange,handleSubmit,showAlert}
+   
+  return {formErrors,formValues,handleChange,handleSubmit,showAlert,isLoading}
 }
 
 

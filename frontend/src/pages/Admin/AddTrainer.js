@@ -59,7 +59,7 @@ const AddTrainer = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen w-full bg-white">
+      <div className="flex justify-center items-center h-screen w-full  bg-gray-200">
         <div className="w-1/2 bg-black rounded shadow-2xl p-8 m-4">
           <h1 className="block w-full text-center text-custom-gym text-2xl font-semibold mb-6">
             Add Trainer

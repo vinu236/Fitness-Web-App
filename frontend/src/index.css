@@ -56,3 +56,19 @@ profile_img{
     animation-timing-function: ease-in-out;
   }
     
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 1px;
+    scrollbar-width: none; /* adjust the width of the scrollbar */
+  }
+  
+  /* color of scrollbar */
+  ::-webkit-scrollbar-track {
+    background-color: darkgrey;
+  }
+
+  .section::-webkit-scrollbar-thumb {
+    background: #8070d4;
+    border: 6px solid rgba(0, 0, 0, 0.2);
+  }
+  
