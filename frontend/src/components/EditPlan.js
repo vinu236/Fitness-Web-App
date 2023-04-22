@@ -108,11 +108,16 @@ const EditPlan = () => {
           <label className="block text-white font-bold mb-2 " htmlFor="details">
             Details
           </label>
+          <ul>
+            {formValues?.list?.length>0 &&formValues.list.map(data=>{
+              return <li>{data.list}</li>
+            })}
+          </ul>
           <input
             name="list"
             className="rounded-lg shadow-md border-gray-400 appearance-none border w-[400px] py-2 px-3  text-black leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            value={formValues.list}
+            value={""}
             placeholder="Enter plan detail"
           />
           <button className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline">

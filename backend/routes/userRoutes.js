@@ -2,6 +2,8 @@
 const express = require("express");
 const verify=require("../middleware/Auth")
 const router = express.Router();
+const multer=require("multer");
+// const upload=multer({dest:})
 // !importing Controller(Business Logics)
 const userControllerRoutes = require("../controller/userController");
 

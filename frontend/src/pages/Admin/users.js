@@ -10,9 +10,11 @@ import Heading from "../../components/Heading";
 import { URL } from "../../../config";
 import { Link } from "react-router-dom";
 import instance from "../../api/axios";
+import { filterData } from "../../utils/helper";
 const User = () => {
   const [trainees, setTrainees] = useState([]);
-  const [text, setText] = useState("gggg");
+  const [searchText, setSearchText] = useState("");
+  const[filterTrainee,setFilterTrainee]=useState([])
   useEffect(() => {
     getUserData();
   }, []);
@@ -50,14 +52,15 @@ const User = () => {
       });
 
       console.log(data);
-      const updateUser = trainees.map((trainee) => {
+      const updateUser = filterTrainee.map((trainee) => {
         if (trainee._id === data._id) {
           return { ...trainee, isActive: data.isActive };
         }
         return trainee;
       });
       console.log(updateUser);
-      setTrainees(updateUser);
+      setFilterTrainee(updateUser)
+      // setTrainees(updateUser);
       console.log(trainees);
     } catch (error) {
       console.log(error);
@@ -118,6 +121,7 @@ const User = () => {
     try {
       const { data } = await instance.get("/dashboard/users");
       console.log(data);
+      setFilterTrainee(data);
       setTrainees(data);
     } catch (error) {
       console.log(error);
@@ -137,9 +141,30 @@ const User = () => {
         
 
         <Heading text="Trainee Details" />
-        <Search />
+        {/* <Search searchText={searchText} handleSearch={text} onClick={handleClickSearch}/> */}
+        <div className="flex justify-between mb-2 items-center">
+          <div className="flex gap-3 mr-4 items-center">
+            <input
+              type="search"
+              className="border-2 rounded-xl  focus:ring-black focus:outline-none focus:ring focus:ring-opacity-70 p-1"
+              value={searchText}
+              onChange={(e)=>{
+                setSearchText(e.target.value)
+              }}
+            />
+            <span>
+              <button className="bg-black text-white p-2 rounded-lg" onClick={()=>{
+                const data = filterData(searchText,trainees );
+                
+                setFilterTrainee(data)
+              }}>
+                Search
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
-      <DataTable column={COLUMNS} Data={trainees} />
+      <DataTable column={COLUMNS} Data={filterTrainee} />
     </div>
   </div>
   );
