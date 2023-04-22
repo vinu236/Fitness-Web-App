@@ -3,6 +3,7 @@ import Shimmer from "../../components/Shimmer";
 import { TbLockOpen, TbLockOff } from "react-icons/tb";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import instance from "../../api/axios";
 const Trainee = () => {
   const [trainees, setTrainees] = useState([]);
   useEffect(() => {
@@ -16,8 +17,8 @@ const Trainee = () => {
 
     try {
       alert("ASFD")
-      const { data } = await axios.patch(
-        `http://localhost:3000/dashboard/users/${user._id}`,
+      const { data } = await instance.patch(
+        `/${user._id}`,
         { isActive: !erthytrhyuser.isActive }
       );
       const updatedUser = trainees.map((trainee) => {

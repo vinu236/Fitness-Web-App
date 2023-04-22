@@ -21,7 +21,7 @@ const Chat = () => {
   console.log(uid);
 
   useEffect(()=>{
-    socket.current=io("http://localhost:3000");
+    socket.current=io("https://api.getfitgo.online");
     socket.current.on("getMessage",(data)=>{
       setArrivalMessage({
         sender:data.senderId,

@@ -14,7 +14,7 @@ const BmiScoreBox=({bmi,bmiName,save})=>{
         console.log(bmiData)
 
         try {
-           const {data}=await axios.patch(`http://localhost:3000/add/bmi/${id}`,bmiData);
+           const {data}=await instance.patch(`/add/bmi/${id}`,bmiData);
            console.log(data);
            
 
