@@ -72,3 +72,9 @@ profile_img{
     border: 6px solid rgba(0, 0, 0, 0.2);
   }
   
+  .custom-active-tab {
+    background-color: #333;
+    color: #fff;
+  }
+ 
+  

@@ -21,6 +21,11 @@ const planSchema = new Schema({
   list: {
     type: Array, // which array
   },
+  img:{
+    url:String,
+    filename:String
+
+  },
   Recommended: {
     type: Boolean,
     default: false,

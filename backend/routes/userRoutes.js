@@ -3,7 +3,8 @@ const express = require("express");
 const verify=require("../middleware/Auth")
 const router = express.Router();
 const multer=require("multer");
-// const upload=multer({dest:})
+const {storage}=require("../cloudinary")
+const upload=multer({storage})
 // !importing Controller(Business Logics)
 const userControllerRoutes = require("../controller/userController");
 
@@ -14,15 +15,17 @@ router.post("/signup", userControllerRoutes.postSignup);
 router.delete("/testing/:id",verify.verifyToken,(req,res)=>{
 
     if(!req.user.isAdmin){
-        res.json("The user has been deleted");
+        return res.json("The user has been deleted");
     }
     res.status(200).json(" sorry You are not Authenticated to delete the user")
 })
 //Login=>
 router.get("/login", userControllerRoutes.getLogin);
 router.post("/login", userControllerRoutes.postLogin);
-router.get('/user/:id',userControllerRoutes.getUser);
-router.patch('/update/password/:id',userControllerRoutes.updatePassword);
+router.get('/user/:id',verify.verifyToken,userControllerRoutes.getUser);
+router.patch('/update/password/:id',verify.verifyToken,userControllerRoutes.updatePassword);
+console.log("hello")
+router.patch('/update/img/:id',verify.verifyToken,upload.single('img'),userControllerRoutes.updateProImg)
 
 // Bmi=>
 router.patch("/add/bmi/:id",userControllerRoutes.addBmi);
@@ -30,7 +33,7 @@ router.patch("/add/bmi/:id",userControllerRoutes.addBmi);
 
 //Booking=>
 // router.get("/bookings/:id",userControllerRoutes.getBooking);
-router.post("/plan/booking",userControllerRoutes.addBooking);
+router.post("/plan/booking",verify.verifyToken,userControllerRoutes.addBooking);
 router.get("/booking/:id",userControllerRoutes.userBookingHistory)
 
 

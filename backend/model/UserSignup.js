@@ -41,8 +41,9 @@ const userSignUpSchema=new Schema({
         default:true
     }
     ,
-    proImgUrl:{
-        type:String
+    proImg:{
+        url:String,
+        filename:String
     },
     Age:{
         type:Number

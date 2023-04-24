@@ -128,7 +128,7 @@ export const AppRouter = createBrowserRouter([
         path: "/",
         element:  <Home />,
       },
-      { path: "/user/profile", element: <Active> <UserVerification> <UserProfile /> </UserVerification> </Active>},
+      { path: "/user/profile", element:  <UserVerification> <UserProfile /> </UserVerification>},
       {
         path:"/trainer/profile",
         element:<TrainerProfile/>

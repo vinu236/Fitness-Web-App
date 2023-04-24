@@ -3,6 +3,9 @@
 const {Router}=require("express");
 const router=Router();
 const adminControllerRoutes=require("../controller/adminController")
+const multer=require("multer");
+const {storage}=require("../cloudinary")
+const upload=multer({storage})
 //admin login=>
 router.post("/admin/login",adminControllerRoutes.postLogin)
 
@@ -17,7 +20,7 @@ router.patch('/dashboard/blockTrainer/:id',adminControllerRoutes.trainerBlock);
 
 
 //plan=>
-router.post("/dashboard/addPlan",adminControllerRoutes.addPlan);
+router.post("/dashboard/addPlan",upload.single("img"),adminControllerRoutes.addPlan);
 router.get("/dashboard/plan",adminControllerRoutes.getPlans);
 router.delete("/dashboard/delete/plans/:id",adminControllerRoutes.deletePlans)
 router.get("/dashboard/getPlans/details/:id",adminControllerRoutes.getPlanDetails);

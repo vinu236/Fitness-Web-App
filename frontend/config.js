@@ -40,7 +40,11 @@ export const profileHeading=[
   {title:"Plan",to:"/plan"}
 ]
 
-
+  export const traineeAuth={
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("traineeToken")}`
+    }
+  }
 
 // export const Quotes=[
 //   "Time and health are two precious assets that we don't recognize and appreciate until they have been depleted. - Denis Waitley",

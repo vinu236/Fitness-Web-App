@@ -60,7 +60,8 @@ const useLogin = (url) => {
       if (Object.keys(formErrors).length === 0 && submit) {
         // destructuring the data from response object
         const { data, status } = await instance.post(url, formValues);
-        console.log(data);
+        console.log(data);  
+
         if (data?.isBlocked === false) {
           console.log("blocked");
           setShowAlert("Your Are Blocked By The Admin--Contact Admin");

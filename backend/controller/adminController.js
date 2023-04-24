@@ -138,9 +138,11 @@ exports.trainerBlock = async (req, res) => {
 //adding plans Controller
 exports.addPlan = async (req, res) => {
   try {
-    console.log("ashfdkzjshdka");
-
     const { planName, heading, price, duration, list, Recommended } = req.body;
+    const img={
+      url:req.file.path,
+      filename:req.file.filename
+    }
     const data = await Plan.create({
       planName,
       heading,
@@ -148,6 +150,7 @@ exports.addPlan = async (req, res) => {
       price,
       list,
       Recommended,
+      img
     });
     res.status(201).json({
       data,

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const SinglePlanPage = () => {
   const [features, setFeatures] = useState([]);
   const navigate=useNavigate();
-
+  const tokenAuth=localStorage.getItem("traineeToken");
   const handleToken = async (token) => {
     try {
       const uid= localStorage.getItem("uid")
@@ -19,7 +19,11 @@ const SinglePlanPage = () => {
         uid,
        features
       };
-      const {data,status} = await instance.post("plan/booking", body);
+      const {data,status} = await instance.post("plan/booking", body,{
+        headers:{
+          Authorization:`Bearer ${tokenAuth}`
+        }
+      });
       console.log(data);
 
       if(status===200){
@@ -29,9 +33,24 @@ const SinglePlanPage = () => {
 
 
     } catch (error) {
-     if(error){
-      toast.error("Something Went Wrong");
-     }
+      if(error.response){
+        console.log(error.response)
+        if(error.response.status===403){
+          const message=error.response.data
+          localStorage.removeItem("traineeToken")
+          localStorage.removeItem("uid");
+          toast.error(message);
+          navigate("/login");
+        }
+        if(error.response.status===401){
+          const message=error.response.data
+          console.log(message);
+          localStorage.removeItem("traineeToken");
+          localStorage.removeItem("uid")
+          navigate("/login")
+          toast.error(message);
+        }
+      }
     }
   };
 

@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { RxCrossCircled } from "react-icons/rx";
 import instance from "../api/axios";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
+import ButtonLoader from "./ButtonLoader";
 
 function AddPlanForm() {
   const intialValues = {
@@ -10,12 +13,14 @@ function AddPlanForm() {
     price: "",
     duration: "",
     list: "",
-    Recommended:false
+    Recommended: false,
+    img: "",
   };
   const [formValues, setFormValues] = useState(intialValues);
   const [formList, setFormList] = useState([]);
-  const[isChecked,setCheck]=useState(false)
-  const navigate=useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -46,24 +51,33 @@ function AddPlanForm() {
     event.preventDefault();
     // Here you can add code to submit the form data to the server
     const formData = { ...formValues, list: formList.map((items) => items) };
+    console.log(formData);
 
     postPlan(formData);
   };
   const postPlan = async (formData) => {
     try {
-      alert("asd");
+      setIsLoading(true);
       console.log("hell");
-      const data = await instance.post(
-       "dashboard/addPlan",
-        formData
+      console.log(formData);
+      const { data, status } = await instance.post(
+        "dashboard/addPlan",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-      
-      navigate("/dashboard/plans");
+      if (status === 201) {
+        navigate("/dashboard/plans");
+        toast.success("Plan Added successfully");
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
   const renderedList = formList.map((list, index) => {
     return (
       <li
@@ -77,17 +91,26 @@ function AddPlanForm() {
       </li>
     );
   });
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    setImageUrl(url);
+    setFormValues({ ...formValues, img: file });
+  };
+  const handleCancel = () => {
+    setImageUrl(null);
+    setFormValues({ ...formValues, img: "" });
+  };
 
   return (
     <div className="w-full md:w-3/4 lg:w-2/3 mx-auto  md:p-6 rounded-lg shadow-md bg-black mt-16 h-1/2 p-11">
-      <h2 className="text-2xl font-bold mb-6 text-center text-white">Add New Plan</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-bold mb-6 text-center text-white">
+        Add New Plan
+      </h2>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="flex justify-between w-full">
           <div className="mb-4 w-[400px]">
-            <label
-              className="block text-white  font-bold mb-2"
-              htmlFor="name"
-            >
+            <label className="block text-white  font-bold mb-2" htmlFor="name">
               Name
             </label>
             <input
@@ -165,10 +188,7 @@ function AddPlanForm() {
         </div>
         {/* ---------------------------------------------------------------------------------------------------------- */}
         <div className="mb-4   ">
-          <label
-            className="block text-white font-bold mb-2 "
-            htmlFor="details"
-          >
+          <label className="block text-white font-bold mb-2 " htmlFor="details">
             Details
           </label>
           <input
@@ -181,27 +201,75 @@ function AddPlanForm() {
           />
           <button
             onClick={handleAddList}
-            className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+            className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
           >
             Add
           </button>
 
-          <ul className="mt-3 max-h-32 overflow-y-auto scrollbar-thumb-black scrollbar-track-black">{renderedList}</ul>
+          <ul className="mt-3 max-h-24 overflow-y-auto scrollbar-thumb-black scrollbar-track-black">
+            {renderedList}
+          </ul>
         </div>
-        <label className="flex items-center space-x-2 p-3">
-          <input
-            type="checkbox"
-            className="form-checkbox h-5 w-5 checked:bg-custom-gym "
-            name="checkbox"
-            onChange={(e)=>setFormValues({...formValues,Recommended:e.target.checked})}
-            checked={formValues.Recommended}
-          />
-          <span className="text-white font-medium">Recommended</span>
-        </label>
+        <div className="w-full flex justify-between">
+          <div className="flex items-start gap-2 ml-5">
+            <div className="w-28 h-28 border border-dashed flex items-center justify-center rounded-sm">
+              <label
+                className="w-full h-full flex items-center justify-center cursor-pointer hover:opacity-60  relative"
+                htmlFor="addPlanImg"
+              >
+                {imageUrl ? (
+                  <img src={imageUrl} className="w-full h-full" alt="img" />
+                ) : (
+                  <h1 className="text-white text-lg font-bold  absolute top-[38%]">
+                    Add Photo
+                  </h1>
+                )}
+                <input
+                  type="file"
+                  className="hidden"
+                  id="addPlanImg"
+                  onChange={handleFileChange}
+                  name="img"
+                  accept="image/*"
+                />
+              </label>
+            </div>
+            {imageUrl && (
+              <FaTimes
+                size={24}
+                className="text-red-600 cursor-pointer hover:text-custom-head"
+                title="cancel"
+                onClick={handleCancel}
+              />
+            )}
+          </div>
+          <label className="flex items-center space-x-2 p-3 mr-10">
+            <input
+              type="checkbox"
+              className="form-checkbox h-5 w-5 rounded-2xl checked:bg-custom-gym "
+              name="checkbox"
+              onChange={(e) =>
+                setFormValues({ ...formValues, Recommended: e.target.checked })
+              }
+              checked={formValues.Recommended}
+            />
+            <span className="text-white font-medium">Recommended</span>
+          </label>
+        </div>
         <div className="w-full flex items-center justify-center">
-        <button className="bg-custom-gym text-white font-bold py-2 w-[150px] px-4 rounded focus:outline-none focus:shadow-outline">
-          Submit
-        </button>
+          {!isLoading ? (
+            <button className="bg-custom-gym text-white font-bold py-2 w-[150px] px-4 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head">
+              Submit
+            </button>
+          ) : (
+            <ButtonLoader
+              text={"Submitting"}
+              size={24}
+              className={
+                "bg-custom-gym flex text-white font-bold py-2 w-[150px] px-4 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
+              }
+            />
+          )}
         </div>
       </form>
     </div>

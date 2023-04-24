@@ -10,14 +10,14 @@ import { useState } from "react";
 import Bmi from "./Bmi";
 
 export default function Tab({data}) {
-  const [activeTab, setActiveTab] = useState("html");
+  const [activeTab, setActiveTab] = useState("bmi");
   
  
 
   return (
     <Tabs id="custom-animation" value={activeTab} className="bg-black">
       <TabsHeader>
-        {data.map(({ label, value }) => (
+        {data.map(({  label, value }) => (
           <Tab
             key={value}
             value={value}
@@ -26,6 +26,7 @@ export default function Tab({data}) {
                 ? "bg-custom-head text-white rounded-2xl"
                 : "bg-custom-gym text-black rounded-xl "
             }
+            activeTabClassName="custom-active-tab" 
             onClick={() => setActiveTab(value)}
           >
             {label}

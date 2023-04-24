@@ -11,7 +11,7 @@ const UserProfile = () => {
   const UserData = [
     {
       label: "BMI Calculator",
-      value: "html",
+      value: "bmi",
       desc: (
       <Bmi/>
       ),
@@ -35,7 +35,7 @@ const UserProfile = () => {
   return (
     <section className="flex flex-grow">
       <UserProfileSection src={avatar} onClick={handleLogout}/>
-      <div className="bg-white w-full h-[64px]">
+      <div className=" w-full h-[64px]">
         <Tab data={UserData}/>
       </div>
     </section>
