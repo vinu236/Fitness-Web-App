@@ -1,18 +1,38 @@
-import{BsClock} from "react-icons/bs"
+import { BsClock } from "react-icons/bs";
 import { Quotes } from "../../config";
-const TimeHeading=()=>{
 
-    
-    return(
-        <div className="flex flex-wrap p-5 mt-10     ml-6 mr-7 rounded-tl-[200px] rounded-br-[200px] rounded-3xl justify-center gap-[12px] items-center  bg-neutral-800 opacity-90 shadow-2xl max-md:rounded-lg ">
-           <div>
-           <BsClock className="text-custom-head text-7xl animate-spin max-md:text-xl " />
-            </div> 
-            <div className="w-80 p-5">
-                <p className="text-white  text-2xl">"Time and health are two precious assets that we don't recognize and appreciate until they have been depleted." - <span className="text-custom-head capitalize">Denis Waitley</span> </p>
-            </div>
-        </div>
-    )
-}
+const TimeHeading = () => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        padding: "1rem",
+        marginTop: "2rem",
+        marginLeft: "1rem",
+        marginRight: "1rem",
+        borderRadius: "1rem",
+        justifyContent: "center",
+        gap: "0.75rem",
+        alignItems: "center",
+        backgroundColor: "rgba(33, 43, 54, 0.9)",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        borderRadius: "1rem",
+        maxHeight: "20rem",
+        overflow: "hidden",
+      }}
+    >
+      <div>
+        <BsClock style={{ fontSize: "4rem", color: "#4a5568", animation: "spin 2s infinite linear" }} />
+      </div>
+      <div style={{ width: "80%", padding: "1rem", overflow: "hidden" }}>
+        <p style={{ color: "white", fontSize: "1.5rem", margin: 0 }}>
+          "Time and health are two precious assets that we don't recognize and appreciate until they have been depleted." -{" "}
+          <span style={{ color: "#4a5568", textTransform: "capitalize" }}>Denis Waitley</span>
+        </p>
+      </div>
+    </div>
+  );
+};
 
 export default TimeHeading;

@@ -418,3 +418,22 @@ exports.getMessage = async (req, res) => {
     console.log(error);
   }
 };
+
+
+exports.getActiveCount=async(req,res)=>{
+  try {
+    const getActiveCount=await User.find({isActive:true}).count();
+    res.status(200).json(getActiveCount)
+  } catch (error) {
+      console.log(error)
+  }
+}
+exports.getDeActiveCount=async(req,res)=>{
+  try {
+    const getDeActiveCount=await User.find({isActive:false}).count();
+    console.log(getDeActiveCount)
+    res.status(200).json(getDeActiveCount)
+  } catch (error) {
+      console.log(error)
+  }
+}

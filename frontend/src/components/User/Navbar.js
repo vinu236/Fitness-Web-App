@@ -49,7 +49,7 @@ const Navbar = () => {
   const mobNav=(
 
     
-      <div className="hidden max-md:block w-full h-screen bg-neutral-800 opacity-95 absolute z-40 	 transition-all duration-200	ease-out">
+      <div className="hidden max-md:block w-full h-screen bg-neutral-800 opacity-95 absolute z-40 transition-all duration-200 ease-out ">
         <ul className="bg-black h-[70%] flex flex-col items-center justify-center text-white text-2xl gap-24">
         {renderNavbar}
         </ul>
@@ -85,8 +85,8 @@ const Navbar = () => {
     //doubt
    <>
    {console.log(traineeAuth)}
-    <div className="flex items-center justify-between shadow-md  bg-transparent text-white w-full max-h-20  ">
-      <img src={Logo} alt="logo" className=" max-h-28" />
+    <div className="flex items-center justify-between shadow-md   text-white w-full max-h-20 bg-black  max-sm:h-[55px]">
+      <img src={Logo} alt="logo" className=" max-h-28 max-sm:h-[6rem]" />
       <div className="max-md:hidden">
         <ul className="flex gap-4">{renderNavbar}</ul>
       </div>
@@ -113,7 +113,7 @@ const Navbar = () => {
       </div>
      <div className="hidden max-md:block">
       {!show ?(
-        <RiMenu3Fill className="text-custom-gym mr-6" size={33} onClick={handleShow}/>):(
+        <RiMenu3Fill className="text-custom-gym mr-6 max-sm:h-[2rem]" size={33} onClick={handleShow}/>):(
           <RxCross1 className="text-custom-gym mr-6  transform transition duration-500 rotate-180 ease-in-out" size={33} onClick={handleHidden}/>
         )}
      </div>

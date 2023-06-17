@@ -1,0 +1,124 @@
+.plans-section {
+  padding: 9rem 0;
+}
+.heading-secondary {
+  font-size: 3.4rem;
+  line-height: 1.2;
+  margin-bottom: 3rem;
+  color: white;
+  opacity: 80%;
+}
+.subheading {
+  display: block;
+  font-size: 1.6rem;
+  color: #cf711f;
+  font-weight: bolder;
+  text-transform: uppercase;
+  margin-bottom: 5.6rem;
+  letter-spacing: 0.75px;
+}
+.subheading::after {
+  content: "";
+  background:#f36100;
+  position: absolute;
+  padding: 2px;
+  width: 103px;
+  height: 5px;
+  top: 35px;
+  left:48px;
+  animation-name: slide;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem;
+  gap: 1.6rem;
+}
+.list-item {
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.plan-header {
+  text-align: center;
+  margin-bottom: 38px;
+}
+.plan-pricing {
+  border: 2px solid #e88a38;
+  width: 75%;
+  
+}
+.containr {
+  /* 1140px */
+  max-width: 90rem;
+  padding: 0 3rem;
+  margin: 0 auto;
+  position: relative;
+}
+.plan-price {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.plan-price span {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-right: 0.8rem;
+}
+.plan-name {
+  color: #cf711f;
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2.75;
+  margin-bottom: 2.2rem;
+}
+.princing-plan--starter {
+  justify-self: end;
+  border: 2px solid #fdf2e9;
+  padding: 4.6rem;
+}
+.princing-plan--complete {
+  background-color: #fdf2e9;
+  padding: 4.8rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.princing-plan--complete::after {
+  content: "Best value";
+  position: absolute;
+  top: 6%;
+  right: -18%;
+
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+  background-color: #ffd43b;
+  padding: 0.8rem 5rem;
+  transform: rotate(45deg);
+}
+
+.shad{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  scale: 1;
+}

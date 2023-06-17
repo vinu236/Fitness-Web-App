@@ -230,6 +230,51 @@ exports.getBookings = async (req, res) => {
   }
 };
 
+exports.updatePlans=async(req,res)=>{
+  try {
+    console.log("hello");
+    console.log(req.file)
+    let imag={}
+      if(req.file){
+       imag={
+        url:req.file.path,  
+        filename:req.file.filename
+      }
+    }
+    console.log(imag);
+    
+      const { planName, heading, price, duration, list, Recommended } = req.body;
+      const{id}=req.params
+      const data={
+        planName,
+        heading,
+        price,
+        duration,
+        list,
+        Recommended,
+        imag
+      }
+      console.log("dtttttt")
+      console.log(data)
+      const updatePlans=await Plan.findByIdAndUpdate(id,data);
+        console.log(" this new data");
+        console.log(updatePlans)
+      res.status(201).json({
+        data:updatePlans,
+        message:"Updated Successfully"
+
+      })
+
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+
 exports.getUserBooking = async (req, res, next) => {
   try {
 

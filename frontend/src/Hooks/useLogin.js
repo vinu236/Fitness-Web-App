@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import instance from "../api/axios";
 import { useDispatch } from "react-redux";
-import { setUserId, setToken,setIsBlocked } from "../Redux/userSlice";
-import { setTrainerToken,setTrainerId } from "../Redux/trainerSlice";
+import { setUserId, setToken, setIsBlocked } from "../Redux/userSlice";
+import { setTrainerToken, setTrainerId } from "../Redux/trainerSlice";
+
 const useLogin = (url) => {
   console.log(url);
   const initialValues = { email: "", password: "" };
@@ -60,7 +61,7 @@ const useLogin = (url) => {
       if (Object.keys(formErrors).length === 0 && submit) {
         // destructuring the data from response object
         const { data, status } = await instance.post(url, formValues);
-        console.log(data);  
+        console.log(data);
 
         if (data?.isBlocked === false) {
           console.log("blocked");
@@ -75,7 +76,7 @@ const useLogin = (url) => {
           localStorage.setItem("uid", data.uid);
           dispatch(setToken(data.traineeToken));
           dispatch(setUserId(data.uid));
-          dispatch(setIsBlocked(data.isBlocked))
+          dispatch(setIsBlocked(data.isBlocked));
           toast.success("Logged in Successfully");
           navigate("/");
         }
@@ -85,14 +86,14 @@ const useLogin = (url) => {
           localStorage.setItem("trainerToken", data.trainerToken);
           localStorage.setItem("tid", data.tid);
           dispatch(setTrainerId(data.tid));
-          dispatch(setTrainerToken(data.trainerToken))
+          dispatch(setTrainerToken(data.trainerToken));
           toast.success("Logged in Successfully");
           navigate("/");
         }
       }
     } catch (error) {
       setSubmit(false);
-      setShowAlert("")
+      setShowAlert("");
       console.log(error);
       if (error.response) {
         if (error.response.status == 404) {

@@ -3,18 +3,20 @@ import { useParams } from "react-router-dom";
 import instance from "../api/axios";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaTimes } from "react-icons/fa";
-import{AiFillEdit} from "react-icons/ai"
+import { AiFillEdit } from "react-icons/ai";
 import ButtonLoader from "./ButtonLoader";
-
+import {toast} from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const EditPlan = () => {
   const [formValues, setFormValues] = useState({});
-  const[list,setList]=useState("");
+  const [list, setList] = useState("");
   const { id } = useParams();
   const [imageUrl, setImageUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const[editList,setListEdit]=useState(false)
-  
+  const [editList, setListEdit] = useState(false);
+  const[img,setImg]=useState("")
+  const navigate=useNavigate()
 
   useEffect(() => {
     getPlan();
@@ -22,12 +24,13 @@ const EditPlan = () => {
 
   const getPlan = async () => {
     try {
-        const {data,status}=await instance.get(`/dashboard/getPlans/details/${id}`);
-        console.log(data?.data);
-        setFormValues(data?.data);
-       
+      const { data, status } = await instance.get(
+        `/dashboard/getPlans/details/${id}`
+      );
+      console.log(data?.data);
+      setFormValues(data?.data);yyyy
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -37,37 +40,35 @@ const EditPlan = () => {
     setList("");
     setListEdit(false);
   };
-  
-  const handleEdit=(id)=>{
+
+  const handleEdit = (id) => {
     const filteredList = formValues.list.filter((item, index) => index === id);
     setList(filteredList[0].list);
     setListEdit(true);
-
   };
 
   console.log(list);
-  
 
-
-  const renderedList = formValues?.list?.length > 0 && formValues.list.map((list, index) => {
-       return (
-      <li
-        key={index}
-        className="bg-gray-100 flex  justify-between items-center py-2 px-4 rounded-lg mb-4"
-      >
-        <span className="text-gray-600 mr-4">{list.list}</span>
-       <div className="flex gap-3">
-       <span className="text-gray-500 cursor-pointer hover:text-blue-400">
-          <AiFillEdit onClick={()=>handleEdit(index)}/>
-        </span>
-        <span className="text-gray-500 cursor-pointer hover:text-red-500">
-          <RxCrossCircled onClick={() => handleDelete(index)} />
-        </span>
-       </div>
-      </li>
-    );
-     
-  });
+  const renderedList =
+    formValues?.list?.length > 0 &&
+    formValues.list.map((list, index) => {
+      return (
+        <li
+          key={index}
+          className="bg-gray-100 flex  justify-between items-center py-2 px-4 rounded-lg mb-4"
+        >
+          <span className="text-gray-600 mr-4">{list.list}</span>
+          <div className="flex gap-3">
+            <span className="text-gray-500 cursor-pointer hover:text-blue-400">
+              <AiFillEdit onClick={() => handleEdit(index)} />
+            </span>
+            <span className="text-gray-500 cursor-pointer hover:text-red-500">
+              <RxCrossCircled onClick={() => handleDelete(index)} />
+            </span>
+          </div>
+        </li>
+      );
+    });
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
@@ -76,40 +77,60 @@ const EditPlan = () => {
   };
   const handleCancel = () => {
     setImageUrl(null);
-    setFormValues({ ...formValues, img: "" });
-  
+    console.log(formValues.img.url);
+
   };
 
-  const handleListCancel=(e)=>{
-    e.preventDefault()
+  const handleListCancel = (e) => {
+    e.preventDefault();
     setList("");
     setListEdit(false);
-  }
-  const handleUpdate=(e)=>{
-    e.preventDefault()
-    
+  };
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
     console.log(list);
     console.log(formValues);
-    
-  }
-  const handleChange=(e)=>{
-    const {name,value}=e.target;
-    setList(value)
-    console.log(value)
-  }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setList(value);
+    console.log(value);
+  };
 
-  const handleAddList=(e)=>{
+  const handleAddList = (e) => {
     e.preventDefault();
-    setFormValues({...formValues,list:[...formValues.list,{list}]});
+    setFormValues({ ...formValues, list: [...formValues.list, { list }] });
     setList("");
-  }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    console.log(formValues);
+    try {
+      setIsLoading(true)
+      const { data,status } = await instance.patch(`/update/plans/${id}`, formValues, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if(status===201){
+        setIsLoading(false)
+        toast.success("Plans Updated Successfully");
+        navigate("/dashboard/plans");
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="w-full md:w-3/4 lg:w-2/3 mx-auto  md:p-6 rounded-lg shadow-md bg-black mt-16 h-1/2 p-11">
       <h2 className="text-2xl font-bold mb-6 text-center text-white">
         Edit Plan
       </h2>
-      <form onSubmit={""}>
+      <form onSubmit={handleSubmit}>
         <div className="flex justify-between w-full">
           <div className="mb-4 w-[400px]">
             <label className="block text-white  font-bold mb-2" htmlFor="name">
@@ -187,43 +208,41 @@ const EditPlan = () => {
         </div>
         {/* ---------------------------------------------------------------------------------------------------------- */}
         <div className="mb-4">
-          
           <label className="block text-white font-bold mb-2 " htmlFor="details">
             Details
           </label>
           <div className="flex">
-          <input
-            name="list"
-            className="rounded-lg shadow-md border-gray-400 appearance-none border w-[400px] py-2 px-3  text-black leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            value={list}
-            placeholder="Enter plan detail"
-           
-            onChange={handleChange}
-          />
-         {!editList? <button
-            className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
-           onClick={handleAddList}
-          >
-            Add
-          </button>
-          :(
-          <div >
-          <button
-            className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
-            onClick={handleUpdate}
-            >
-            Update
-          </button>
-          <button
-            className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
-            onClick={handleListCancel}
-            >
-            Cancel
-          </button>
-            </div>)
-          
-        }
+            <input
+              name="list"
+              className="rounded-lg shadow-md border-gray-400 appearance-none border w-[400px] py-2 px-3  text-black leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              value={list}
+              placeholder="Enter plan detail"
+              onChange={handleChange}
+            />
+            {!editList ? (
+              <button
+                className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
+                onClick={handleAddList}
+              >
+                Add
+              </button>
+            ) : (
+              <div>
+                <button
+                  className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
+                <button
+                  className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
+                  onClick={handleListCancel}
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
           <ul className="mt-3 max-h-24 overflow-y-auto scrollbar-thumb-black scrollbar-track-black">
             {renderedList}
@@ -236,8 +255,12 @@ const EditPlan = () => {
                 className="w-full h-full flex items-center justify-center cursor-pointer hover:opacity-60  relative"
                 htmlFor="addPlanImg"
               >
-                {imageUrl ? (
-                  <img src={imageUrl} className="w-full h-full" alt="img" />
+                {imageUrl||formValues?.img?.url ? (
+                  <img
+                    src={ imageUrl||formValues?.img?.url}
+                    className="w-full h-full"
+                    alt="img"
+                  />
                 ) : (
                   <h1 className="text-white text-lg font-bold  absolute top-[38%]">
                     Add Photo
@@ -275,7 +298,7 @@ const EditPlan = () => {
             <span className="text-white font-medium">Recommended</span>
           </label>
         </div>
-      
+
         <div className="w-full flex items-center justify-center">
           {!isLoading ? (
             <button className="bg-custom-gym text-white font-bold py-2 w-[150px] px-4 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head">

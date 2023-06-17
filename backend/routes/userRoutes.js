@@ -48,5 +48,8 @@ router.get("/message/:conversationId",userControllerRoutes.getMessage);
 
 
 //otp
-router.post("/verify/otp",userControllerRoutes.postVerifyOtp)
+router.post("/verify/otp",userControllerRoutes.postVerifyOtp);
+
+router.get("/user/active/count/",userControllerRoutes.getActiveCount);
+router.get("/user/deActive/count/",userControllerRoutes.getDeActiveCount);
 module.exports = router;

@@ -26,6 +26,7 @@ import Otp from './src/components/Otp';
 import PageLoader from "./src/components/PageLoader";
 import EditPlan from "./src/components/EditPlan";
 import Active from "./src/components/Active";
+import PlanPage from "./src/pages/User/Plan/PlanPage";
 
 const AdminLayout = () => {
   return (
@@ -57,10 +58,8 @@ const dispatch=useDispatch();
   return (
     <>
     <ToastContainer/>
-    <div className="h-screen bg-black">
-
       <Navbar />
-      
+    <div className="h-screen bg-black">
       <Outlet />
     </div>
     </>
@@ -136,6 +135,11 @@ export const AppRouter = createBrowserRouter([
       {
         path:"/single/plan/:id",
         element:<SinglePlanPage/>
+      }
+      ,
+      {
+        path:"/plans",
+        element:<PlanPage/>
       }
       
     ],

@@ -1,7 +1,7 @@
 import axios from "axios";
 const instance=axios.create({
   
-    baseURL: 'https://api.getfitgo.online',
+    baseURL: 'http://localhost:3000/',
 });
-//  https://api.getfitgo.online
+// / https://api.getfitgo.online
 export default instance;

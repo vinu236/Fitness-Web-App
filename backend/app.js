@@ -23,7 +23,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
   cors: {
-    origin: "https://getfitgo.online",
+    origin: "http://localhost:1234",
     // https://getfitgo.online
   },
 });

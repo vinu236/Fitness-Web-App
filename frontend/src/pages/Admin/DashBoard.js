@@ -1,10 +1,11 @@
 import { useState,useEffect } from "react";
-import BarChart from "../../components/PieChart";
+import BarChart from "../../components/BarChart";
 import { UserData } from "../../components/Data";
 import instance from "../../api/axios";
 import UserCount from "../../components/UserCount";
 import TrainerCount from "../../components/TrainerCount";
 import BookingCount from "../../components/BookingsCount";
+import PieChart from "../../components/PieChart"
 const DashBoard = () => {
   const [traineesCount,setTraineesCount]=useState(0);
   const[trainersCount,setTrainersCount]=useState(0);
@@ -14,12 +15,12 @@ const DashBoard = () => {
     datasets: [
       {
         label: "Plans Purchased",
-        data: UserData.map((data) => data.userGain),
+        data: UserData.map((data) => data.planPurchased),
         backgroundColor: [
           "#FFA500",
-          "#ecf0f1",
           "#50AF95",
-          "#f3ba2f",
+          "#ecf0f1",
+          "#f36100",
           "#2a71d0",
         ],
       },
@@ -91,16 +92,24 @@ const DashBoard = () => {
 
   return (
     <>
-    <div className="flex flex-col justify-center  w-full">
-    <div className="flex justify-around">
-      <UserCount count={traineesCount} title={"Trainees"}/>
-      <TrainerCount count={trainersCount} title={"Trainers"}/>
-      <BookingCount count={BookingsCount} title={"Bookings"}/>
-    </div>
-    <div  className="mt-9 flex justify-center w-[600px]">
-    <BarChart chartData={userData} />
+   <div className="flex flex-col justify-center w-full bg-slate-900">
+  <div className="flex justify-around">
+    <UserCount count={traineesCount} title={"Trainees"} />
+    <TrainerCount count={trainersCount} title={"Trainers"} />
+    <BookingCount count={BookingsCount} title={"Bookings"} />
+  </div>
+  <div className="w-full flex justify-around">
+  <div className="mt-9 flex w-1/2  justify-around">
+    <BarChart chartData={userData}  className="w-96"/>
+  </div>
+  <div className="mt-9 flex w-40% justify-around">
+  <PieChart chartData={userData} className="w-32"/>
   </div>
   </div>
+  
+ 
+</div>
+
   </>
   )
 };

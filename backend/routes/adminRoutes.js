@@ -24,6 +24,7 @@ router.post("/dashboard/addPlan",upload.single("img"),adminControllerRoutes.addP
 router.get("/dashboard/plan",adminControllerRoutes.getPlans);
 router.delete("/dashboard/delete/plans/:id",adminControllerRoutes.deletePlans)
 router.get("/dashboard/getPlans/details/:id",adminControllerRoutes.getPlanDetails);
+router.patch("/update/plans/:id",upload.single("img"),adminControllerRoutes.updatePlans);
 
 
 //bookings
