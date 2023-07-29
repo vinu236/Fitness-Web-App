@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import useSignUp from "../../Hooks/useSignUp";
-import  Alert  from "../../components/Alert";
 import ButtonLoader from "../../components/ButtonLoader";
 
 
 const SignUp = () => {
   //! here im using custom hook for signup and  using destructuring  to get values returning from useSignup hook
     const{formErrors,formValues,handleChange,handleSubmit,showAlert,isLoading}=useSignUp()
-  return (
+  return (  
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-black">
   
       <div className="w-full p-6 m-auto bg-black rounded-md shadow-xl shadow-rose-600/40  ring-purple-600 lg:max-w-xl">
@@ -15,7 +14,6 @@ const SignUp = () => {
           SignUp
         </h1>
         <form className="mt-6" onSubmit={handleSubmit}>
-        {showAlert && <Alert text={showAlert} className={"bg-red-600 rounded-md font-sans flex justify-center"} />}
           <div className="mb-2 mt-4">
             <label className="block text-sm font-semibold text-white" htmlFor="userName">
               Username

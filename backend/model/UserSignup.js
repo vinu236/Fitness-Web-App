@@ -48,7 +48,7 @@ const userSignUpSchema=new Schema({
     Age:{
         type:Number
     },
-    Bmi:[bmiSchema],
+    Bmi:bmiSchema,
     
     plan:{
         type:Boolean,

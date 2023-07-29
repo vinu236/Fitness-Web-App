@@ -241,7 +241,7 @@ exports.updateProImg=async(req,res)=>{
 
 /*================================BMI Section=========================================  */
 
-exports.addBmi = async (req, res) => {
+exports.addBmi = async (req, res,next) => {
   try {
     console.log("asjdhad");
     const { id } = req.params;
@@ -249,7 +249,8 @@ exports.addBmi = async (req, res) => {
     console.log(bmiValue);
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { $push: { Bmi: { value: bmiValue, type: bmiType } } },
+      
+      {$set:{Bmi:{value:bmiValue,type:bmiType}}},
       { new: true }
     );
     if (!updatedUser) {
@@ -267,10 +268,20 @@ exports.addBmi = async (req, res) => {
 
 /* ==================================================Bookings===================================================== */
 
-exports.addBooking = async (req, res) => {
+exports.addBooking = async (req, res,next) => {
   try {
     //these are coming from the json for handle that i have use a middleware on the app.js express.json()
     const { features, token, uid } = req.body;
+    console.log("heyasdasdasdasd")
+    console.log(req.body.features._id);
+
+    const activePlanCheck=await User.findOne({$and:[{_id:uid},{plan:true}]});
+    console.log(activePlanCheck)
+    if(activePlanCheck){
+      const err=new Error('You already have an active Plan');
+      err.status = 404;
+      return next(err);
+    }
 
     const customer = await stripe.customers.create({
       email: token.email,
@@ -325,7 +336,7 @@ exports.addBooking = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

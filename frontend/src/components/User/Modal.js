@@ -1,6 +1,6 @@
 import ReactDOM  from "react-dom";
 import { useEffect } from "react";
-const Modal=({onClose, heading,children})=>{
+const   Modal=({onClose, heading,children})=>{
 console.log("MODAL")
     //!only want to run the useEffect fn one time when the component is render
     useEffect(()=>{
